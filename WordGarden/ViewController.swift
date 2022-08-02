@@ -21,12 +21,12 @@ class ViewController: UIViewController {
 
         let img = renderer.image { ctx in
             // 2
-            ctx.cgContext.move(to: CGPoint(x: 20.0, y: 20.0))
-            ctx.cgContext.addLine(to: CGPoint(x: 260.0, y: 230.0))
-            ctx.cgContext.move(to: CGPoint(x: 20.0, y: 230.0))
-            ctx.cgContext.addLine(to: CGPoint(x: 260.0, y: 20.0))
+            for _ in 1...5 {
+                ctx.cgContext.move(to: CGPoint(x: Int.random(in: 20...260), y: Int.random(in: 20...230)))
+                ctx.cgContext.addLine(to: CGPoint(x: Int.random(in: 20...260), y: Int.random(in: 20...230)))
+            }
 
-            ctx.cgContext.setLineWidth(10)
+            ctx.cgContext.setLineWidth(2)
             ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
 
             // 3
@@ -59,12 +59,24 @@ class ViewController: UIViewController {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 280, height: 250))
 
         let img = renderer.image { ctx in
-            let rect = CGRect(x: 5, y: 5, width: 270, height: 240)
+            
+            let petals=7
+            for n in 0...petals {
+                    
+                let rect = CGRect(x: 100+40*sin(2.0*Double(n)*M_PI/8), y: 85+40*cos(2.0*Double(n)*M_PI/8), width: 80, height: 80)
 
-            // 6
-            ctx.cgContext.setFillColor(UIColor.blue.cgColor)
+                // 6
+                ctx.cgContext.setFillColor(UIColor.yellow.cgColor)
+                ctx.cgContext.setStrokeColor(UIColor.purple.cgColor)
+                ctx.cgContext.setLineWidth(2)
+
+                ctx.cgContext.addEllipse(in: rect)
+                ctx.cgContext.drawPath(using: .fillStroke)
+            }
+            let rect = CGRect(x: 120, y: 105, width: 40, height: 40)
+            ctx.cgContext.setFillColor(UIColor.red.cgColor)
             ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
-            ctx.cgContext.setLineWidth(10)
+            ctx.cgContext.setLineWidth(1)
 
             ctx.cgContext.addEllipse(in: rect)
             ctx.cgContext.drawPath(using: .fillStroke)
